@@ -18,7 +18,9 @@ if ($conn->connect_errno)
 	exit();
 }
 
-mysqli_query($conn,"Update vehicle_locations set lat='$lat', lon='$lon', lastUpdatedAt='$now' where vehicleId=$vid;");
+$stmt = mysqli_prepare($conn,"Update vehicle_locations set lat=?, lon=?, lastUpdatedAt=? where vehicleId=?");
+mysqli_stmt_bind_param($stmt, 'ssss', $lat, $lon, $now, $vid);
+mysqli_stmt_execute($stmt);
 
 mysqli_close($conn);
 echo "ok";
