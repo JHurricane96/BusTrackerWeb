@@ -1,0 +1,6 @@
+Header set Access-Control-Allow-Origin "*"
+
+AuthType Basic
+AuthName "Password Protected Area"
+AuthUserFile /home/parth/delta/bustracker/BusTrackerWeb
+Require valid-user

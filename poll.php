@@ -1,5 +1,7 @@
 <?php
 
+require("common.php");
+
 /*
  * /poll
  * Returns json:
@@ -16,16 +18,15 @@
  * { "error": <string> }
  */
 
-$conn = mysqli_connect("localhost","root","","bustracker_pilot");
+$conn = new mysqli($DBHOST,$DBUSER,$DBPWD,$DBNAME);
 
 if ($conn->connect_errno)
 {
-	echo '{"error":"Failed to connect to MySQL: "' . $conn->connect_error . '}';
-	exit();
+    internalError($conn->connect_error);
 }
 
 $vehicles = [];
-if($result = mysqli_query($conn,"SELECT * FROM vehicle_locations")) {
+if($result = $conn->query("SELECT vehicleId, vehicleType, licenseNumber, lat, lon, lastUpdatedAt FROM vehicle_locations")) {
 	while($row = $result->fetch_object()) {
 		$vehicles[] = $row;
 	}
