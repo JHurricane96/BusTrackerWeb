@@ -23,12 +23,14 @@ DROP TABLE IF EXISTS `vehicle_locations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `vehicle_locations` (
-  `vehicleId` varchar(255) NOT NULL PRIMARY KEY,
+  `vehicleId` varchar(255) NOT NULL,
   `vehicleType` varchar(255) DEFAULT NULL,
   `licenseNumber` varchar(255) DEFAULT NULL,
   `lat` varchar(255) DEFAULT NULL,
   `lon` varchar(255) DEFAULT NULL,
-  `lastUpdatedAt` varchar(255) DEFAULT NULL
+  `lastUpdatedAt` varchar(255) DEFAULT NULL,
+  `vehicleSecret` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`vehicleId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -38,7 +40,6 @@ CREATE TABLE `vehicle_locations` (
 
 LOCK TABLES `vehicle_locations` WRITE;
 /*!40000 ALTER TABLE `vehicle_locations` DISABLE KEYS */;
-INSERT INTO `vehicle_locations` VALUES ('1','generalBus','1290','10.001234','12.001234','2017-04-10T18:57:25+05:30'),('2','boysBus','1230','10.123400','12.123400','2017-04-10T18:57:46+05:30'),('3','girlsBus','1232','10.123450','12.223400','2017-04-10T18:59:46+05:30');
 /*!40000 ALTER TABLE `vehicle_locations` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-04-10 18:58:27
+-- Dump completed on 2017-07-26 13:11:56
