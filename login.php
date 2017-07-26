@@ -17,26 +17,27 @@ if ($conn->connect_errno)
     internalError($conn->connect_error);
 }
 
-$stmt=$conn->prepare("Select count(*) from vehicle_locations where vehicleId=? and vehicleSecret=?;");
+$stmt=$conn->prepare("Select vehicleSecret from vehicle_locations where vehicleId=?;");
 if (!$stmt) {
-    internalError($conn->connect_error);
-}
-
-$stmt->bind_param("s",$vid);
-$stmt->bind_param("s",password_hash($vehicleSecret,PASSWORD_DEFAULT));
-
-if($stmt->execute()) {
     internalError($conn->error);
 }
 
-$count = NULL;
-if(!$stmt->bind_result($count)) {
+if(!$stmt->bind_param("s",$vid)) {
+    internalError($stmt->error);
+}
+
+if(!$stmt->execute()) {
+    internalError($conn->error);
+}
+
+$hash = NULL;
+if(!$stmt->bind_result($hash)) {
     internalError($stmt->error);
 }
 
 $stmt->fetch();
 
-if($count != 1) {
+if(!password_verify($skt, $hash)) {
     echo '{error:"Invalid credentials"}';
     exit();
 }

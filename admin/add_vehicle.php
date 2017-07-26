@@ -1,6 +1,6 @@
 <?php
 
-require_once("common.php");
+require_once("../common.php");
 
 /**
  * POST /login.php
@@ -21,18 +21,18 @@ if ($conn->connect_errno)
     internalError($conn->connect_error);
 }
 
-$stmt=$conn->prepare("INSERT INTO vehicle_locations(vechicleId, vehicleType, licenseNumber, vehicleSecret) Values (?,?,?,?);");
+$stmt=$conn->prepare("INSERT INTO vehicle_locations(vehicleId, vehicleType, licenseNumber, vehicleSecret) Values (?,?,?,?);");
 if (!$stmt) {
     internalError($conn->connect_error);
 }
 
-$stmt->bind_param("s",$vid);
-$stmt->bind_param("s",$vtype);
-$stmt->bind_param("s",$licenseNumber);
-$stmt->bind_param("s",password_hash($vehicleSecret,PASSWORD_DEFAULT));
+$hash = password_hash($skt, PASSWORD_DEFAULT);
+if(!$stmt->bind_param("ssss",$vid,$vtype,$licenseNumber, $hash)) {
+    internalError($stmt->error);
+}
 
-if($stmt->execute()) {
-    internalError($conn->error);
+if(!$stmt->execute()) {
+    internalError($stmt->error);
 }
 
 mysqli_close($conn);
