@@ -1,0 +1,4 @@
+.htaccess
+.htpasswd
+.env
+*.log
